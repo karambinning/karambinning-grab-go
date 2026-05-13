@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grab &amp; Go — Falafel &amp; Shawarma, delivered · Loughborough</title>
+<meta name="description" content="Independent Middle Eastern takeaway on Leicester Road, Loughborough. Falafel, shawarma, the best tasting food delivered to your door.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  :root{
+    --paper:#FBF3E7;
+    --paper-deep:#F2E4CC;
+    --clay:#E08A50;
+    --ember:#8E3B22;
+    --char:#2A130D;
+    --ink:#2A130D;
+    --display:"Bebas Neue", "Arial Narrow", sans-serif;
+    --serif:"Lora", "Georgia", serif;
+    --rhythm:clamp(1rem, .85rem + .5vw, 1.2rem);
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:var(--rhythm);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  h1,h2,h3,.dsp{
+    font-family:var(--display);
+    font-weight:400;
+    letter-spacing:.01em;
+    line-height:.88;
+    text-wrap:balance;
+  }
+  p{text-wrap:pretty;hyphens:auto}
+  a{color:inherit}
+  ::selection{background:var(--ember);color:var(--paper)}
+
+  /* paper grain overlay */
+  .grain{
+    position:fixed;inset:0;pointer-events:none;z-index:50;
+    opacity:.07;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* top bar */
+  .topbar{
+    position:relative;z-index:5;
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:1.1rem clamp(1rem,4vw,3rem) 0;
+    font-family:var(--display);font-size:1.15rem;
+    letter-spacing:.18em;
+  }
+  .topbar .mark{display:flex;gap:.6rem;align-items:baseline}
+  .topbar .dot{
+    width:.55rem;height:.55rem;border-radius:50%;
+    background:var(--ember);display:inline-block;
+    transform:translateY(-.05rem);
+  }
+  .topbar nav{display:flex;gap:1.4rem}
+  .topbar nav a{text-decoration:none;position:relative;padding-bottom:.2rem}
+  .topbar nav a::after{
+    content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;
+    background:var(--ember);transition:right .3s ease;
+  }
+  .topbar nav a:hover::after{right:0}
+
+  /* masthead */
+  .masthead{
+    padding:clamp(2rem,7vw,5rem) clamp(1rem,4vw,3rem) clamp(1.5rem,4vw,3rem);
+    position:relative;
+  }
+  .est{
+    font-family:var(--display);font-size:1.05rem;letter-spacing:.25em;
+    color:var(--ember);
+    display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;
+  }
+  .est::after{
+    content:"";flex:1;height:1px;background:var(--ember);opacity:.5;
+    max-width:30rem;
+  }
+  .wordmark{
+    font-size:clamp(5.5rem, 22vw, 22rem);
+    color:var(--char);
+    margin-bottom:.5rem;
+  }
+  .wordmark .amp{
+    color:var(--ember);
+    font-family:"Lora", serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:.65em;
+    display:inline-block;
+    transform:translateY(-.08em);
+    padding:0 .04em;
+  }
+  .kicker{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(1.05rem, 1.6vw, 1.4rem);
+    max-width:36ch;
+    margin-top:.5rem;color:var(--char);
+    line-height:1.45;
+  }
+  .meta-row{
+    margin-top:clamp(1.5rem,4vw,2.8rem);
+    display:flex;flex-wrap:wrap;gap:1.4rem 3rem;
+    font-family:var(--display);letter-spacing:.18em;font-size:1.05rem;
+    color:var(--char);
+    border-top:1px solid color-mix(in oklab, var(--char) 30%, transparent);
+    padding-top:1.3rem;
+  }
+  .meta-row span small{
+    display:block;font-family:var(--serif);font-style:italic;
+    font-size:.78rem;letter-spacing:.02em;color:var(--ember);
+    margin-bottom:.15rem;text-transform:none;
+  }
+
+  /* marquee */
+  .ticker{
+    background:var(--char);
+    color:var(--paper);
+    overflow:hidden;
+    padding:1.1rem 0;
+    border-top:1px solid var(--ember);
+    border-bottom:1px solid var(--ember);
+  }
+  .ticker__track{
+    display:inline-flex;gap:2.2rem;white-space:nowrap;
+    font-family:var(--display);font-size:clamp(1.6rem,4vw,2.8rem);
+    letter-spacing:.05em;
+    animation:roll 32s linear infinite;
+    padding-right:2.2rem;
+  }
+  .ticker__track span.diamond{color:var(--clay);font-style:normal;transform:translateY(-.05em)}
+  @keyframes roll{ to{ transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){
+    .ticker__track{animation:none}
+  }
+
+  /* about / story */
+  .story{
+    padding:clamp(3rem,8vw,6rem) clamp(1rem,4vw,3rem);
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:clamp(1.5rem,4vw,3rem);
+    max-width:1280px;margin:0 auto;
+  }
+  @media (min-width:840px){
+    .story{grid-template-columns:1fr 1.4fr;align-items:start}
+  }
+  .story h2{
+    font-size:clamp(3rem,7vw,6rem);
+    color:var(--ember);
+  }
+  .story-body p{
+    font-size:clamp(1.1rem,1.4vw,1.4rem);
+    line-height:1.55;
+    max-width:46ch;
+  }
+  .story-body p + p{margin-top:1rem}
+  .pullquote{
+    font-family:var(--display);font-size:clamp(1.4rem,2vw,1.9rem);
+    letter-spacing:.06em;color:var(--char);
+    margin-top:1.6rem;padding-top:1.3rem;
+    border-top:1px solid color-mix(in oklab, var(--char) 25%, transparent);
+    max-width:30ch;line-height:1.05;
+  }
+
+  /* menu / broadsheet */
+  .menu{
+    background:var(--paper-deep);
+    padding:clamp(3.5rem,9vw,7rem) clamp(1rem,4vw,3rem);
+    border-top:1px solid color-mix(in oklab, var(--ember) 35%, transparent);
+    border-bottom:1px solid color-mix(in oklab, var(--ember) 35%, transparent);
+  }
+  .menu-inner{max-width:1180px;margin:0 auto}
+  .menu-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:1.5rem;flex-wrap:wrap;
+    margin-bottom:clamp(2rem,5vw,3.5rem);
+  }
+  .menu-head h2{
+    font-size:clamp(3rem,8vw,7rem);
+    color:var(--char);
+  }
+  .menu-head .lede{
+    max-width:34ch;font-style:italic;
+    color:var(--ember);font-size:1.1rem;
+    line-height:1.45;
+  }
+  .menu-grid{
+    display:grid;gap:clamp(2.5rem,5vw,4rem);
+    grid-template-columns:repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+  .dish{
+    border-top:2px solid var(--char);
+    padding-top:1.1rem;
+  }
+  .dish-num{
+    font-family:var(--display);font-size:1rem;letter-spacing:.25em;
+    color:var(--ember);margin-bottom:.4rem;
+  }
+  .dish h3{
+    font-size:clamp(2.4rem,5vw,4rem);
+    color:var(--char);
+    margin-bottom:.6rem;
+  }
+  .dish p{
+    font-size:1.05rem;line-height:1.55;max-width:32ch;
+  }
+  .dish .origin{
+    margin-top:1rem;font-style:italic;color:var(--ember);
+    font-size:.95rem;
+  }
+  .menu-note{
+    margin-top:clamp(2.5rem,5vw,3.5rem);
+    padding-top:1.4rem;
+    border-top:1px dashed color-mix(in oklab, var(--char) 40%, transparent);
+    font-size:.95rem;font-style:italic;color:var(--char);
+    max-width:60ch;
+  }
+
+  /* delivery / how to order */
+  .order{
+    padding:clamp(3.5rem,9vw,7rem) clamp(1rem,4vw,3rem);
+    display:grid;gap:clamp(2rem,5vw,4rem);
+    max-width:1180px;margin:0 auto;
+  }
+  @media(min-width:840px){
+    .order{grid-template-columns:1.1fr 1fr;align-items:end}
+  }
+  .order h2{
+    font-size:clamp(3rem,8vw,6.5rem);
+    color:var(--char);
+    line-height:.9;
+  }
+  .order h2 em{
+    font-family:var(--serif);font-style:italic;color:var(--ember);
+    font-weight:400;font-size:.7em;letter-spacing:0;
+  }
+  .order p{font-size:1.15rem;max-width:42ch;line-height:1.55}
+  .order .cta-row{
+    margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.9rem 1.2rem;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:.55rem;
+    padding:.85rem 1.4rem;border-radius:999px;
+    font-family:var(--display);letter-spacing:.18em;font-size:1.05rem;
+    text-decoration:none;transition:transform .25s ease, background .25s ease, color .25s ease;
+  }
+  .pill.solid{background:var(--ember);color:var(--paper)}
+  .pill.solid:hover{background:var(--char);transform:translate(2px,-2px)}
+  .pill.ghost{border:1.5px solid var(--char);color:var(--char)}
+  .pill.ghost:hover{background:var(--char);color:var(--paper);transform:translate(2px,-2px)}
+  .pill .arr{font-family:var(--serif);font-style:italic;font-size:1.05rem;letter-spacing:0}
+
+  /* find us */
+  .find{
+    background:var(--char);
+    color:var(--paper);
+    padding:clamp(3.5rem,9vw,7rem) clamp(1rem,4vw,3rem);
+    overflow:hidden;
+    position:relative;
+  }
+  .find::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 80% at 80% 20%, color-mix(in oklab, var(--ember) 60%, transparent) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .find-inner{
+    position:relative;display:grid;gap:2.5rem;max-width:1180px;margin:0 auto;
+  }
+  @media(min-width:840px){
+    .find-inner{grid-template-columns:1.2fr 1fr;align-items:end}
+  }
+  .find h2{
+    font-size:clamp(3rem,8vw,7rem);
+    color:var(--paper);
+  }
+  .find h2 .mark{color:var(--clay)}
+  .find .letterhead{
+    font-family:var(--display);font-size:clamp(1.4rem,2.2vw,2.1rem);
+    line-height:1.25;letter-spacing:.06em;
+  }
+  .find .letterhead span{display:block}
+  .find .letterhead .small{
+    font-family:var(--serif);font-style:italic;font-size:.9rem;
+    letter-spacing:.02em;color:var(--clay);margin-top:.6rem;line-height:1.4;
+  }
+  .find .links{
+    margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.8rem 1.4rem;
+    font-family:var(--display);font-size:1rem;letter-spacing:.18em;
+  }
+  .find .links a{
+    text-decoration:none;border-bottom:1.5px solid var(--clay);
+    padding-bottom:.2rem;
+    transition:color .2s, border-color .2s;
+  }
+  .find .links a:hover{color:var(--clay);border-color:var(--paper)}
+
+  /* footer */
+  footer{
+    background:var(--paper);color:var(--char);
+    padding:2.4rem clamp(1rem,4vw,3rem);
+    display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;
+    font-family:var(--display);letter-spacing:.2em;font-size:.95rem;
+    border-top:1px solid color-mix(in oklab, var(--char) 25%, transparent);
+  }
+  footer .credit{font-family:var(--serif);font-style:italic;letter-spacing:.02em;font-size:.9rem;color:var(--ember)}
+
+  /* reveal */
+  @supports (animation-timeline: view()){
+    .reveal{
+      animation: rise both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
+    @keyframes rise{
+      from{opacity:0;transform:translateY(1.6rem)}
+      to  {opacity:1;transform:none}
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{animation:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="mark"><span class="dot" aria-hidden="true"></span><span>GRAB &amp; GO</span></div>
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#order">Order</a>
+    <a href="#find">Find us</a>
+  </nav>
+</header>
+
+<section class="masthead">
+  <div class="est">Loughborough <span aria-hidden="true">·</span> Levantine kitchen</div>
+
+  <h1 class="wordmark">
+    GRAB <span class="amp">&amp;</span> GO
+  </h1>
+
+  <p class="kicker">
+    Falafel and shawarma made to order, then handed over hot — to your door, or to your hand at the counter on Leicester Road.
+  </p>
+
+  <div class="meta-row">
+    <span>Falafel<small>spiced, fried, soft inside</small></span>
+    <span>Shawarma<small>marinated, slow-cooked, sliced</small></span>
+    <span>Delivery<small>across Loughborough</small></span>
+    <span>Collection<small>36a Leicester Road · LE11 2AG</small></span>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>FALAFEL</span><span class="diamond">◆</span>
+    <span>SHAWARMA</span><span class="diamond">◆</span>
+    <span>DELIVERED</span><span class="diamond">◆</span>
+    <span>LOUGHBOROUGH</span><span class="diamond">◆</span>
+    <span>FRESHLY MADE</span><span class="diamond">◆</span>
+    <span>EAT IN · TAKE AWAY</span><span class="diamond">◆</span>
+    <span>FALAFEL</span><span class="diamond">◆</span>
+    <span>SHAWARMA</span><span class="diamond">◆</span>
+    <span>DELIVERED</span><span class="diamond">◆</span>
+    <span>LOUGHBOROUGH</span><span class="diamond">◆</span>
+    <span>FRESHLY MADE</span><span class="diamond">◆</span>
+    <span>EAT IN · TAKE AWAY</span><span class="diamond">◆</span>
+  </div>
+</div>
+
+<section class="story reveal">
+  <h2>The best<br>tasting<br>food.</h2>
+  <div class="story-body">
+    <p>
+      A small Levantine kitchen on Leicester Road, Loughborough. Two things done well: chickpea falafel, spiced and crisp at the edges; and shawarma — marinated, slow-cooked, carved off the spit and folded into warm flatbread with the sharp green of pickle and parsley.
+    </p>
+    <p>
+      Order in for delivery, or come by the shop. Either way: food made when you ask for it, handed over hot.
+    </p>
+    <div class="pullquote">
+      &ldquo;The best tasting food, delivered to your door.&rdquo;
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="menu">
+  <div class="menu-inner">
+    <div class="menu-head reveal">
+      <h2>What<br>we serve.</h2>
+      <p class="lede">A short menu, on purpose. Built around the two things we make over and over — and have got good at.</p>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="dish reveal">
+        <div class="dish-num">№ 01 · Signature</div>
+        <h3>Falafel</h3>
+        <p>
+          Hand-rolled chickpea fritters, spiced with cumin and coriander, fried to order. Soft inside, crisp on the outside — wrapped, boxed, or in a salad.
+        </p>
+        <p class="origin">Levantine. Vegetarian by nature.</p>
+      </article>
+
+      <article class="dish reveal">
+        <div class="dish-num">№ 02 · Signature</div>
+        <h3>Shawarma</h3>
+        <p>
+          Marinated meat, stacked and slow-cooked on the spit, then carved thin as it&rsquo;s ordered. Folded into warm flatbread with garlic sauce, pickles and parsley.
+        </p>
+        <p class="origin">A Levantine classic. Slow cook, fast serve.</p>
+      </article>
+
+      <article class="dish reveal">
+        <div class="dish-num">№ 03 · From the side</div>
+        <h3>Salads &amp; sauces</h3>
+        <p>
+          Garlic sauce, chilli, lemon. Tomato, cucumber, parsley, pickled turnip — the bright, sharp side of every plate.
+        </p>
+        <p class="origin">Made fresh, kept cold.</p>
+      </article>
+
+    </div>
+
+    <p class="menu-note">
+      Daily specials, prices and the full current menu live on our Facebook page — that&rsquo;s where we post tomorrow&rsquo;s changes today.
+    </p>
+  </div>
+</section>
+
+<section id="order" class="order reveal">
+  <div>
+    <h2>Order <em>direct</em><br>to your door.</h2>
+    <p>
+      Loughborough delivery is the heart of what we do. For today&rsquo;s opening hours, the live menu, and to place an order, head to the Facebook page below — or come find us on Leicester Road.
+    </p>
+    <div class="cta-row">
+      <a class="pill solid" href="https://www.facebook.com/grabandgosf/" target="_blank" rel="noopener">
+        Message on Facebook <span class="arr">→</span>
+      </a>
+      <a class="pill ghost" href="#find">
+        Get directions <span class="arr">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <p style="font-style:italic;color:var(--ember);font-size:1.05rem;border-left:2px solid var(--ember);padding-left:1rem;max-width:38ch;">
+      Hours and phone number change with the season — we&rsquo;ll always have the latest pinned to our Facebook page. Check there before you set out, and we&rsquo;ll have it ready.
+    </p>
+  </div>
+</section>
+
+<section id="find" class="find">
+  <div class="find-inner">
+    <div>
+      <h2>Find <span class="mark">us.</span></h2>
+      <p style="max-width:42ch;font-size:1.1rem;margin-top:1rem;opacity:.9;">
+        On Leicester Road, a short walk from the town centre. Walk in, ring ahead, or order to your door — whichever suits the day.
+      </p>
+    </div>
+
+    <div>
+      <div class="letterhead">
+        <span>GRAB &amp; GO</span>
+        <span>36a LEICESTER ROAD</span>
+        <span>LOUGHBOROUGH</span>
+        <span>LE11 2AG</span>
+        <span class="small">Independent Levantine kitchen. Eat in, take away, deliver to your door.</span>
+      </div>
+      <div class="links">
+        <a href="https://www.facebook.com/grabandgosf/" target="_blank" rel="noopener">Facebook ↗</a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=36a+Leicester+Road+Loughborough+LE11+2AG" target="_blank" rel="noopener">Directions ↗</a>
+        <a href="https://loveloughborough.co.uk/love-loughborough/acadp_listings/grab-go/" target="_blank" rel="noopener">Listing ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>GRAB &amp; GO · LOUGHBOROUGH · EST. ON LEICESTER ROAD</span>
+  <span class="credit">Independent kitchen. Built locally.</span>
+</footer>
+
+</body>
+</html>
